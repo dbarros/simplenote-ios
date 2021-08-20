@@ -66,8 +66,9 @@ msgctxt "app_store_keywords"
 msgid "notes,text,planner,journal,diary,sync,to-do,cloud,notebook,simple,notepad,tag,todo,writing,memo"
 msgstr ""
 
-msgctxt "v4.41-whats-new"
+msgctxt "v4.42-whats-new"
 msgid ""
-"- Some bug fixes\n"
+"-   Added In app account deletion #1354\n"
+"\n"
 msgstr ""
 

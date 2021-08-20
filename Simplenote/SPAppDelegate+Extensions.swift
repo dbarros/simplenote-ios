@@ -34,13 +34,6 @@ extension SPAppDelegate {
         let authenticator = simperium.authenticator
 
         authenticator.providerString = "simplenote.com"
-
-        guard BuildConfiguration.current == .internal else {
-            return
-        }
-
-        authenticator.authURL = SPCredentials.experimentalAuthURL
-        authenticator.customHTTPHeaders = ["Host": SPCredentials.experimentalAuthHost]
     }
 }
 
@@ -85,6 +78,11 @@ extension SPAppDelegate {
         publishController.onUpdate = { (note) in
             PublishNoticePresenter.presentNotice(for: note)
         }
+    }
+
+    @objc
+    func configureAccountDeletionController() {
+        accountDeletionController = AccountDeletionController()
     }
 }
 
@@ -403,6 +401,23 @@ extension SPAppDelegate {
             note.deleted ? nil : note.simperiumKey
         }
         EditorFactory.shared.scrollPositionCache.cleanup(keeping: allIdentifiers)
+    }
+}
+
+// MARK: - Account Deletion
+//
+extension SPAppDelegate {
+    @objc
+    func authenticateSimperiumIfNeeded() {
+        guard let deletionController = accountDeletionController else {
+            return
+        }
+
+        if deletionController.deletionTokenHasExpired {
+            return
+        }
+
+        simperium.authenticateIfNecessary()
     }
 }
 

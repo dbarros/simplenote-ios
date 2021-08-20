@@ -127,6 +127,7 @@
     [self setupCrashLogging];
     [self configureVersionsController];
     [self configurePublishController];
+    [self configureAccountDeletionController];
     [self setupDefaultWindow];
     [self configureStateRestoration];
     
@@ -185,6 +186,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self dismissPasscodeLockIfPossible];
+    [self authenticateSimperiumIfNeeded];
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
