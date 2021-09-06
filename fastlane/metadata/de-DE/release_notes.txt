@@ -1,2 +1,3 @@
--   In-App-Kontolöschung hinzugefügt #1354
-
+- Fehler behoben, bei dem über Markdown geöffnete URLs ohne http/https abgestürzt sind
+- Support beim Löschen eines Kontos
+- Schlagwörter werden jetzt aus gelöschten Notizen entfernt

@@ -1,2 +1,4 @@
--   Se ha añadido la función de eliminar la cuenta en la aplicación n.º 1354
+-   Se ha arreglado un fallo que causaba un error al abrir URLs no http/https desde Markdown
+-   Soporte para eliminación de cuentas 
+-   Ahora se borrarán las etiquetas de las notas eliminadas
 
