@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 
 
 // MARK: - Initialization
@@ -97,9 +98,27 @@ extension SPAppDelegate {
         guard let simperiumKey = url.interlinkSimperiumKey, let note = simperium.loadNote(simperiumKey: simperiumKey) else {
             return false
         }
-
-        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
+        popToNoteList()
         noteListViewController.open(note, ignoringSearchQuery: true, animated: true)
+
+        return true
+    }
+
+    /// Opens the Note list displaying a tag associated with a given URL instance, when possible
+    ///
+    @objc
+    func handleOpenTagList(url: NSURL) -> Bool {
+        guard url.isInternalTagURL else {
+            return false
+        }
+
+        if let tag = url.internalTagKey {
+            selectedTag = SPObjectManager.shared().tagExists(tag) ? tag : selectedTag
+        } else {
+            selectedTag = nil
+        }
+
+        popToNoteList()
 
         return true
     }
@@ -260,6 +279,8 @@ extension SPAppDelegate: SimperiumDelegate {
         CrashLoggingShim.cacheUser(user)
         CrashLoggingShim.cacheOptOutSetting(!analyticsEnabled)
 
+        syncWidgetDefaults()
+
         setupVerificationController()
     }
 
@@ -272,6 +293,8 @@ extension SPAppDelegate: SimperiumDelegate {
 
         // Shortcuts!
         ShortcutsHandler.shared.clearHomeScreenQuickActions()
+
+        syncWidgetDefaults()
 
         destroyVerificationController()
     }
@@ -466,5 +489,23 @@ extension SPAppDelegate {
         case .failed:
             coreDataManager = try CoreDataManager(settings.legacyStorageURL)
         }
+    }
+}
+
+// MARK: - Widgets
+extension SPAppDelegate {
+    @objc
+    func resetWidgetTimelines() {
+        guard #available(iOS 14.0, *) else {
+            return
+        }
+        WidgetController.resetWidgetTimelines()
+    }
+
+    @objc
+    func syncWidgetDefaults() {
+        let authenticated = simperium.user?.authenticated() ?? false
+        let sortMode = Options.shared.listSortMode
+        WidgetController.syncWidgetDefaults(authenticated: authenticated, sortMode: sortMode)
     }
 }

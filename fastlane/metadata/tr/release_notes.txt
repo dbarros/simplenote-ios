@@ -1,1 +1,1 @@
-- Listede yalnızca bir not olduğunda tümünü seç düğmesiyle ilgili yaşanan sorun düzeltildi
+- Eklenen ana ekran bileşenleri

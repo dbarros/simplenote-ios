@@ -1,1 +1,1 @@
-- Résolution d’un problème lié au bouton Tout sélectionner lorsqu’il n’y a qu’une seule note dans la liste
+- Ajout de widgets d’écran d’accueil
